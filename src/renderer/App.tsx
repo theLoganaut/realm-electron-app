@@ -1,7 +1,8 @@
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import { Card, Button, Container, Col, Row } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
-import useInterval from 'Component/useIntervalHook';
+import useInterval from 'Components/useIntervalHook';
+import SingleEvent from 'Components/SingleEvent';
 // import icon from '../../assets/icon.svg';
 import './App.css';
 
@@ -25,6 +26,55 @@ const Hello = () => {
   //   console.log(marginTopJS);
   //   setMarginTopJS(margin);
   // };
+
+  const placeholderJSON = [
+    {
+      name: 'Dreaming',
+      description: 'zzZ',
+      duration: 8,
+    },
+    {
+      name: 'Gamin',
+      description: 'League/Super People/Cities/Singleplayer',
+      duration: 1,
+    },
+    {
+      name: 'Coding',
+      description: 'LIPIMS work',
+      duration: 1,
+    },
+    {
+      name: 'Cleaning',
+      description: 'Proteins and lunch',
+      duration: 0.5,
+    },
+    {
+      name: 'Coding',
+      description: 'REALM work',
+      duration: 3,
+    },
+    {
+      name: 'Lunch Break',
+      description: 'Chimichanga',
+      duration: 1,
+    },
+    {
+      name: 'Coding',
+      description: 'LIPIMS work',
+      duration: 3,
+    },
+    {
+      name: 'Gymming',
+      description: 'Chest',
+      duration: 1,
+    },
+  ];
+
+  //this converts the weird dt into a human readable time
+
+  const weirdDT = new Date(1643415998).toLocaleTimeString('en-us');
+
+  console.log(weirdDT);
 
   useInterval(
     () => {
@@ -52,8 +102,9 @@ const Hello = () => {
         style={{
           height: '100vh',
           backgroundColor: 'lightblue',
-          width: '100vw',
+          width: '640px',
         }}
+        fluid
       >
         <Row>
           <Col>
@@ -75,38 +126,16 @@ const Hello = () => {
                   marginTop: marginTopJS,
                 }}
               >
-                <Card>
-                  <Card.Body
-                    style={{ backgroundColor: 'lightgoldenrodyellow' }}
-                  >
-                    <Card.Title>WoodWorking</Card.Title>
-                    <Card.Text>Cleaning Shed</Card.Text>
-                  </Card.Body>
-                </Card>
-                <Card>
-                  <Card.Body style={{ backgroundColor: 'lightseagreen' }}>
-                    <Card.Title>Gaming</Card.Title>
-                    <Card.Text>boolin</Card.Text>
-                  </Card.Body>
-                </Card>
-                <Card>
-                  <Card.Body style={{ backgroundColor: 'lightblue' }}>
-                    <Card.Title>Working Out</Card.Title>
-                    <Card.Text>Chest Day, focus on ____</Card.Text>
-                  </Card.Body>
-                </Card>
-                <Card>
-                  <Card.Body style={{ backgroundColor: 'lightsalmon' }}>
-                    <Card.Title>Coding</Card.Title>
-                    <Card.Text>Working on REALM</Card.Text>
-                  </Card.Body>
-                </Card>
-                <Card>
-                  <Card.Body style={{ backgroundColor: 'lightcoral' }}>
-                    <Card.Title>Coding</Card.Title>
-                    <Card.Text>Working on LIPIMS</Card.Text>
-                  </Card.Body>
-                </Card>
+                {placeholderJSON.map((e) => {
+                  return (
+                    <SingleEvent
+                      name={e.name}
+                      description={e.description}
+                      duration={e.duration}
+                    />
+                  );
+                })}
+
                 <Card style={{ width: '18rem' }}>
                   <Card.Body>
                     <Button
@@ -124,7 +153,10 @@ const Hello = () => {
             <Card style={{ width: '6rem' }}>
               <Card.Body>
                 <Card.Title style={{ fontSize: '20px' }}>🔌3⬇</Card.Title>
+                <Button> Decrement </Button>
               </Card.Body>
+            </Card>
+            <Card>
               <Card.Body>
                 <Card.Title style={{ fontSize: '20px' }}>🧹1⬇</Card.Title>
               </Card.Body>
