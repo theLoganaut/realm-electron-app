@@ -9,7 +9,7 @@ import './App.css';
 const Hello = () => {
   // const eventBlocks = document.getElementById('event-blocks');
   // const refEventBlocks = useRef(eventBlocks);
-  const [margin, setMargin] = useState(0);
+  const [margin, setMargin] = useState(-800);
 
   const [testShow, setTestShow] = useState(false);
 
@@ -32,45 +32,65 @@ const Hello = () => {
       name: 'Dreaming',
       description: 'zzZ',
       duration: 8,
+      color: 'darkgray',
+    },
+    {
+      name: 'Nightly Routine',
+      description: 'zzZ',
+      duration: 1,
+      color: 'darkcyan',
     },
     {
       name: 'Gamin',
       description: 'League/Super People/Cities/Singleplayer',
+      duration: 3.5,
+      color: 'mediumseagreen',
+    },
+    {
+      name: 'Dinner/Chillin',
+      description: 'League/Super People/Cities/Singleplayer',
       duration: 1,
+      color: 'slategray',
     },
     {
       name: 'Coding',
       description: 'LIPIMS work',
       duration: 1,
+      color: 'deepskyblue',
     },
     {
       name: 'Cleaning',
       description: 'Proteins and lunch',
       duration: 0.5,
+      color: 'khaki',
     },
     {
       name: 'Coding',
       description: 'REALM work',
-      duration: 3,
+      duration: 4,
+      color: 'indianred',
     },
     {
       name: 'Lunch Break',
       description: 'Chimichanga',
       duration: 1,
+      color: 'goldenrod',
     },
     {
       name: 'Coding',
       description: 'LIPIMS work',
       duration: 3,
+      color: 'deepskyblue',
     },
     {
       name: 'Gymming',
       description: 'Chest',
       duration: 1,
+      color: 'lightslategray',
     },
   ];
 
-  //this converts the weird dt into a human readable time
+  // this converts the weird dt into a human readable time
 
   const weirdDT = new Date(1643415998).toLocaleTimeString('en-us');
 
@@ -79,9 +99,41 @@ const Hello = () => {
   useInterval(
     () => {
       setMarginTopJS(marginTopJS + 1);
+      console.log('incremented');
     },
     isRunning ? delay : null
+    // 49800 for 12 hour screen
   );
+
+  // const eventBlock = document.getElementById('event-block');
+
+  // function rafAsync() {
+  //   return new Promise((resolve) => {
+  //     requestAnimationFrame(resolve); // faster than set time out
+  //   });
+  // }
+
+  // async function checkElement(selector) {
+  //   const querySelector = null;
+  //   while (querySelector === null) {
+  //     await rafAsync();
+  //     querySelector = document.querySelector(selector);
+  //   }
+  //   return querySelector;
+  // }
+
+  // checkElement(eventBlock) // use whichever selector you want
+  //   .then((element) => {
+  //     const height = element.clientHeight;
+  //     return console.log('height', height);
+  //     // Do whatever you want now the element is there
+  //   })
+  //   .catch((e) => {
+  //     console.log(e);
+  //   });
+
+  // console.log('height of events', getEventBlockHeight);
+  // console.log('height of marker', getTimeMarkerLocation);
 
   // useEffect(() => {
   //   const lowerEleBlock = window.setInterval(() => {
@@ -102,7 +154,8 @@ const Hello = () => {
         style={{
           height: '100vh',
           backgroundColor: 'lightblue',
-          width: '640px',
+          width: '100vw',
+          overflow: 'scroll',
         }}
         fluid
       >
@@ -110,18 +163,19 @@ const Hello = () => {
           <Col>
             <div style={{ display: 'flex' }}>
               <div
+                id="time-marker"
                 style={{
                   fontSize: '70px',
-                  top: '90%',
+                  marginTop: '350px',
                   zIndex: 2,
-                  marginTop: '100%',
                 }}
               >
                 &#62;
               </div>
               <div
+                id="event-block"
                 style={{
-                  width: '18rem',
+                  width: '30rem',
                   marginLeft: '-5%',
                   marginTop: marginTopJS,
                 }}
@@ -132,28 +186,24 @@ const Hello = () => {
                       name={e.name}
                       description={e.description}
                       duration={e.duration}
+                      color={e.color}
                     />
                   );
                 })}
-
-                <Card style={{ width: '18rem' }}>
-                  <Card.Body>
-                    <Button
-                      variant="primary"
-                      onClick={() => setIsRunning(!isRunning)}
-                    >
-                      Start Scrolling
-                    </Button>
-                  </Card.Body>
-                </Card>
               </div>
             </div>
           </Col>
           <Col>
-            <Card style={{ width: '6rem' }}>
+            <Card>
               <Card.Body>
                 <Card.Title style={{ fontSize: '20px' }}>🔌3⬇</Card.Title>
                 <Button> Decrement </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => setIsRunning(!isRunning)}
+                >
+                  Start Scrolling
+                </Button>
               </Card.Body>
             </Card>
             <Card>
