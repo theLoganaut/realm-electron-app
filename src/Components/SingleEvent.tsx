@@ -7,8 +7,6 @@ const SingleEvent = ({ name, description, duration, color }) => {
 
   const calcHeight = duration * baseHeight;
 
-  console.log(calcHeight);
-
   return (
     <div>
       <Card
