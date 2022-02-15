@@ -3,6 +3,7 @@ import { Card, Button, Container, Col, Row } from 'react-bootstrap';
 import { useEffect, useRef, useState } from 'react';
 import useInterval from 'Components/useIntervalHook';
 import SingleEvent from 'Components/SingleEvent';
+import eventBlock from 'Components/eventManager';
 // import fetch from 'electron-fetch';
 // import icon from '../../assets/icon.svg';
 import './App.css';
@@ -167,23 +168,21 @@ const Hello = () => {
       }
   };
 
+  const mainDescCheck = weatherJSON.weather[0].main.toLowerCase();
+
+  const desc = weatherJSON.weather[0].description;
+
   const [showDescription, setShowDescription] = useState(false);
-  useEffect(() => {
-    getWeatherData();
-    if (mainDescCheck !== desc) {
-      setShowDescription(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   getWeatherData();
+  //   if (mainDescCheck !== desc) {
+  //     setShowDescription(true);
+  //   }
+  // });
 
   const dateNum = weatherJSON.dt - 19070000;
 
   const lastUpdateAround = new Date(dateNum).toLocaleTimeString();
-
-  console.log(currentTime, weatherJSON);
-
-  const mainDescCheck = weatherJSON.weather[0].main.toLowerCase();
-
-  const desc = weatherJSON.weather[0].description;
 
   return (
     <div>
@@ -217,11 +216,11 @@ const Hello = () => {
                   marginTop: marginTopJS,
                 }}
               >
-                {placeholderJSON.map((e) => {
+                {eventBlock[0].map((e) => {
                   return (
                     <SingleEvent
-                      name={e.name}
-                      description={e.description}
+                      name={e.title}
+                      description={e.desc}
                       duration={e.duration}
                       color={e.color}
                     />
