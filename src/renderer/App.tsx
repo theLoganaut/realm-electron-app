@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import useInterval from 'Components/useIntervalHook';
 import SingleEvent from 'Components/SingleEvent';
 import eventBlock from 'Components/eventManager';
+import Weather from 'Components/Weather';
+import Tracker from 'Components/Tracker';
 // import fetch from 'electron-fetch';
 // import icon from '../../assets/icon.svg';
 import './App.css';
@@ -28,51 +30,6 @@ const Hello = () => {
   //   console.log(marginTopJS);
   //   setMarginTopJS(margin);
   // };
-
-  const weatherSampleStart = {
-    coord: {
-      lon: -97.62,
-      lat: 30.4394,
-    },
-    weather: [
-      {
-        id: 701,
-        main: 'Mist',
-        description: 'mist',
-        icon: '50d',
-      },
-    ],
-    base: 'stations',
-    main: {
-      temp: 57.54,
-      feels_like: 57.42,
-      temp_min: 55.35,
-      temp_max: 60.4,
-      pressure: 1012,
-      humidity: 94,
-    },
-    visibility: 9656,
-    wind: {
-      speed: 3,
-      deg: 284,
-      gust: 5.99,
-    },
-    clouds: {
-      all: 100,
-    },
-    dt: 1643742894,
-    sys: {
-      type: 2,
-      id: 2011221,
-      country: 'US',
-      sunrise: 1643721686,
-      sunset: 1643760398,
-    },
-    timezone: -21600,
-    id: 4718711,
-    name: 'Pflugerville',
-    cod: 200,
-  };
 
   const placeholderJSON = [
     {
@@ -152,37 +109,37 @@ const Hello = () => {
 
   const dateUNIX = Math.floor(currentTime.getTime() / 1000);
 
-  const [weatherJSON, setWeatherJSON] = useState(weatherSampleStart);
-  // eslint-disable-next-line consistent-return
-  const getWeatherData = async () => {
-    if (weatherJSON.dt + 7200000 - 19070000 > dateUNIX)
-      try {
-        // eslint-disable-next-line promise/catch-or-return
-        const weatherData = await fetch(
-          'https://api.openweathermap.org/data/2.5/weather?q=Pflugerville&units=imperial&appid=819bebd635233ab8f206b89b983f20ae'
-        )
-          .then((response) => response.json())
-          .then((json) => setWeatherJSON(json));
-      } catch (e) {
-        console.log(e);
-      }
-  };
+  // const [weatherJSON, setWeatherJSON] = useState(weatherSampleStart);
+  // // eslint-disable-next-line consistent-return
+  // const getWeatherData = async () => {
+  //   if (weatherJSON.dt + 7200000 - 19070000 > dateUNIX)
+  //     try {
+  //       // eslint-disable-next-line promise/catch-or-return
+  //       const weatherData = await fetch(
+  //         'https://api.openweathermap.org/data/2.5/weather?q=Pflugerville&units=imperial&appid=819bebd635233ab8f206b89b983f20ae'
+  //       )
+  //         .then((response) => response.json())
+  //         .then((json) => setWeatherJSON(json));
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  // };
 
-  const mainDescCheck = weatherJSON.weather[0].main.toLowerCase();
+  // const mainDescCheck = weatherJSON.weather[0].main.toLowerCase();
 
-  const desc = weatherJSON.weather[0].description;
+  // const desc = weatherJSON.weather[0].description;
 
-  const [showDescription, setShowDescription] = useState(false);
-  // useEffect(() => {
-  //   getWeatherData();
-  //   if (mainDescCheck !== desc) {
-  //     setShowDescription(true);
-  //   }
-  // });
+  // const [showDescription, setShowDescription] = useState(false);
+  // // useEffect(() => {
+  // //   getWeatherData();
+  // //   if (mainDescCheck !== desc) {
+  // //     setShowDescription(true);
+  // //   }
+  // // });
 
-  const dateNum = weatherJSON.dt - 19070000;
+  // const dateNum = weatherJSON.dt - 19070000;
 
-  const lastUpdateAround = new Date(dateNum).toLocaleTimeString();
+  // const lastUpdateAround = new Date(dateNum).toLocaleTimeString();
 
   return (
     <div>
@@ -196,7 +153,7 @@ const Hello = () => {
         fluid
       >
         <Row>
-          <Col>
+          {/* <Col>
             <div style={{ display: 'flex' }}>
               <div
                 id="time-marker"
@@ -228,78 +185,10 @@ const Hello = () => {
                 })}
               </div>
             </div>
-          </Col>
+          </Col> */}
           <Col>
-            <Card>
-              <Card.Body>
-                <Card.Title style={{ fontSize: '20px' }}>🔌3⬇</Card.Title>
-                <Button> Decrement </Button>
-                <Button
-                  variant="primary"
-                  onClick={() => setIsRunning(!isRunning)}
-                >
-                  Start Scrolling
-                </Button>
-              </Card.Body>
-            </Card>
-            <Card>
-              <Card.Body>
-                <Card.Title style={{ fontSize: '20px' }}>🧹1⬇</Card.Title>
-              </Card.Body>
-            </Card>
-            <Card>
-              <Row style={{ marginTop: '5%' }}>
-                <Col>
-                  <Card.Title style={{ textAlign: 'center' }}>
-                    {weatherJSON.name}
-                  </Card.Title>
-                </Col>
-                <Col style={{ textAlign: 'center' }}>
-                  <Button onClick={getWeatherData}>Refresh</Button>
-                </Col>
-              </Row>
-
-              <Card.Body>
-                <Row style={{ marginTop: '2%' }}>
-                  <Col>
-                    <Card.Text style={{ fontSize: '24px' }}>
-                      {weatherJSON.weather[0].main}
-                    </Card.Text>
-                  </Col>
-                  {showDescription && (
-                    <Col>
-                      <Card.Text>
-                        {weatherJSON.weather[0].description}
-                      </Card.Text>
-                    </Col>
-                  )}
-                </Row>
-                <Row style={{ marginTop: '2%' }}>
-                  <Col>
-                    <Card.Text>
-                      Current Temp: {Math.round(weatherJSON.main.temp)}
-                    </Card.Text>{' '}
-                  </Col>
-                  <Col>
-                    <Card.Text>
-                      Feels Like: {Math.round(weatherJSON.main.feels_like)}
-                    </Card.Text>
-                  </Col>
-                </Row>
-                <Row style={{ marginTop: '2%' }}>
-                  <Col>
-                    <Card.Text>
-                      Min: {Math.round(weatherJSON.main.temp_min)}
-                    </Card.Text>
-                  </Col>
-                  <Col>
-                    <Card.Text>
-                      Max: {Math.round(weatherJSON.main.temp_max)}
-                    </Card.Text>
-                  </Col>
-                </Row>
-              </Card.Body>
-            </Card>
+            <Tracker />
+            <Weather />
           </Col>
         </Row>
       </Container>
